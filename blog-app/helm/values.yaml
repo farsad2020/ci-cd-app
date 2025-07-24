@@ -1,0 +1,27 @@
+appName: blog
+namespace: blog
+
+image:
+  backend:
+    repository: your-docker-registry/blog-backend
+    tag: "latest"
+  frontend:
+    repository: your-docker-registry/blog-frontend
+    tag: "latest"
+
+replicaCount: 1
+
+backend:
+  port: 8000
+  env:
+    DB_HOST: postgres
+    DB_PORT: "5432"
+    DB_USER: blog_user
+    DB_PASSWORD: strongblogpass456
+    DB_NAME: blog_db
+
+frontend:
+  port: 80
+
+service:
+  type: ClusterIP

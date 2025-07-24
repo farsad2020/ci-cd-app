@@ -1,0 +1,27 @@
+appName: todo
+namespace: todo
+
+image:
+  backend:
+    repository: your-docker-registry/todo-backend
+    tag: "latest"
+  frontend:
+    repository: your-docker-registry/todo-frontend
+    tag: "latest"
+
+replicaCount: 1
+
+backend:
+  port: 3000
+  env:
+    DB_HOST: postgres
+    DB_PORT: "5432"
+    DB_USER: todo_user
+    DB_PASSWORD: strongpass123
+    DB_NAME: todo_db
+
+frontend:
+  port: 80
+
+service:
+  type: ClusterIP
