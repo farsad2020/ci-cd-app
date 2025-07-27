@@ -18,7 +18,14 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Map GitHub Variables to Env
+        run: |
+          echo "APP_NAME=${{ vars.APP_NAME }}" >> $GITHUB_ENV
+          echo "APP_ENV=${{ vars.APP_ENV }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $GITHUB_ENV
 
       - name: Set App Directory
         run: echo "APP_PATH=${APP_NAME}_app" >> $GITHUB_ENV
