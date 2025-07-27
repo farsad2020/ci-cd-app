@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set App Directory
-        run: echo "APP_PATH=${APP_NAME}-app" >> $GITHUB_ENV
+        run: echo "APP_PATH=${APP_NAME}_app" >> $GITHUB_ENV
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
