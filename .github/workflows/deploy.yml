@@ -45,7 +45,7 @@ jobs:
           echo "APP_NAME=${APP_NAME}" >> $APP_PATH/.env
           echo "DB_NAME=${{ vars.DB_NAME }}" >> $APP_PATH/.env
           echo "DB_USER=${{ vars.DB_USER }}" >> $APP_PATH/.env
-          echo "DB_USER=${{ vars.REGISTRY }}" >> $REGISTRY/.env
+          echo "DB_REGESTRY=${{ vars.REGISTRY }}" >> $REGISTRY/.env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $APP_PATH/.env
           echo "DB_PORT=${{ vars.DB_PORT }}" >> $APP_PATH/.env
 
