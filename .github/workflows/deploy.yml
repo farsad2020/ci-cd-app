@@ -45,19 +45,19 @@ jobs:
           echo "APP_NAME=${APP_NAME}" >> $APP_PATH/.env
           echo "DB_NAME=${{ vars.DB_NAME }}" >> $APP_PATH/.env
           echo "DB_USER=${{ vars.DB_USER }}" >> $APP_PATH/.env
-          echo "REGESTRY=${{ vars.REGISTRY }}" >> $REGISTRY/.env
+          echo "DREGESTRY=${{ vars.DREGISTRY }}" >> $DREGISTRY/.env
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $APP_PATH/.env
           echo "DB_PORT=${{ vars.DB_PORT }}" >> $APP_PATH/.env
 
       - name: Build & Push Backend Image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-backend:${{ env.IMAGE_TAG }} $APP_PATH/backend
-          docker push ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-backend:${{ env.IMAGE_TAG }}
+          docker build -t ${{ env.DREGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-backend:${{ env.IMAGE_TAG }} $APP_PATH/backend
+          docker push ${{ env.DREGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-backend:${{ env.IMAGE_TAG }}
 
       - name: Build & Push Frontend Image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-frontend:${{ env.IMAGE_TAG }} $APP_PATH/frontend
-          docker push ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-frontend:${{ env.IMAGE_TAG }}
+          docker build -t ${{ env.DREGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-frontend:${{ env.IMAGE_TAG }} $APP_PATH/frontend
+          docker push ${{ env.DREGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-frontend:${{ env.IMAGE_TAG }}
 
       - name: Deploy to Dev via Docker Compose
         if: env.APP_ENV == 'dev'
@@ -75,8 +75,8 @@ jobs:
         if: env.APP_ENV != 'dev'
         run: |
           helm upgrade --install $APP_NAME $APP_PATH/helm \
-            --set image.backend.repository=${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-backend \
+            --set image.backend.repository=${{ env.DREGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-backend \
             --set image.backend.tag=${{ env.IMAGE_TAG }} \
-            --set image.frontend.repository=${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-frontend \
+            --set image.frontend.repository=${{ env.DREGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}-frontend \
             --set image.frontend.tag=${{ env.IMAGE_TAG }} \
             --namespace $APP_NAME --create-namespace
